@@ -30,4 +30,17 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+ 
+	// public function beforeSave($options = array())
+	// {
+	// 	// save our HABTM relationships
+	// 	foreach (array_keys($this->hasAndBelongsToMany) as $model)
+	// 	{
+	// 		if(isset($this->data[$this->name][$model]))
+	// 		{
+	// 			$this->data[$model][$model] = $this->data[$this->name][$model];
+	// 			unset($this->data[$this->name][$model]);
+	// 		}
+	// 	}
+	// }
 }
