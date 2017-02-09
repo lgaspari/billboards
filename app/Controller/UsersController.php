@@ -9,8 +9,8 @@ App::uses('AppController', 'Controller');
 class UsersController extends AppController {
 
 	public function updatePermissions() {
-		$this->Acl->Aco->create(array('parent_id' => null, 'alias' => 'controllers'));
-		$this->Acl->Aco->save();
+		// $this->Acl->Aco->create(array('parent_id' => null, 'alias' => 'controllers'));
+		// $this->Acl->Aco->save();
 
 	    $role = $this->User->Role;
 
@@ -66,6 +66,17 @@ class UsersController extends AppController {
 	    // we add an exit to avoid an ugly "missing views" error message
 	    echo "all done";
 	    exit;
+	}
+
+/**
+ * beforeFilter method
+ *
+ * @return void
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		$this->Auth->allow();
 	}
 
 /**

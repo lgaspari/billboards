@@ -59,8 +59,7 @@ class AppController extends Controller {
 	public $helpers = array('Html', 'Form', 'Session');
 
 	public function beforeFilter() {
-	    $this->Auth->allow();
-	    $this->set('acl', $this->Acl);
+		$this->set('acl', $this->Acl);
 	}
 
 	public function beforeRender() {
