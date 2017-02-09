@@ -66,6 +66,7 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::loadAll(); // Loads all plugins at once
  * CakePlugin::load('DebugKit'); // Loads a single plugin named DebugKit
  */
+	CakePlugin::load('AclExtras');
 
 /**
  * To prefer app translation over plugin translation, you can set
@@ -108,4 +109,20 @@ CakeLog::config('error', array(
 	'engine' => 'File',
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
+));
+
+
+/**
+ * Configures default settings for the Environment
+ */
+Configure::write('Environment', array(
+	'name' 		=> 'Carteleras',
+	'root' 		=> array(
+		'sscidggedi@gmail.com',
+		'pantallas.gcba@gmail.com'
+	),
+	'email' 	=> array(
+		'noreply' 	=> 'noreply@buenosaires.gob.ar',
+		'admin' 	=> array('pantallas.gcba@gmail.com')
+	)
 ));
