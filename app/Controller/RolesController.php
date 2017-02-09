@@ -16,7 +16,11 @@ class RolesController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Auth->allow();
+		$count = $this->Role->find('count');
+
+		if($count == 0) {
+			$this->Auth->allow('add');
+		}
 	}
 
 /**

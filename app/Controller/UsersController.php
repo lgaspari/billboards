@@ -64,8 +64,7 @@ class UsersController extends AppController {
 	    $this->Acl->allow($role, 'controllers/Users/logout');
 
 	    // we add an exit to avoid an ugly "missing views" error message
-	    echo "all done";
-	    exit;
+	    return $this->redirect($this->Auth->redirect());
 	}
 
 /**
@@ -76,7 +75,15 @@ class UsersController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Auth->allow();
+		$count = $this->User->find('count');
+
+		if($count == 0) {
+			$this->Auth->allow('add');
+		}
+		else if($count == 1) {
+			$this->Auth->allow('updatePermissions');
+		}
+
 	}
 
 /**
@@ -94,7 +101,7 @@ class UsersController extends AppController {
 		}
 		else {
 			// Si el usuario está logeado
-			if ( $this->Auth->User('user') ) {
+			if ( $this->Auth->loggedIn() ) {
 				return $this->redirect($this->Auth->redirect()); // Redirecciono al lugar por default
 			}
 		}
