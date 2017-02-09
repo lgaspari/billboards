@@ -9,6 +9,14 @@ App::uses('AppModel', 'Model');
 class User extends AppModel {
 
 /**
+ * ActAs rules
+ *
+ * @var array
+ */
+	// public $actsAs = array('Acl' => array('type' => 'requester'));
+	public $actsAs = array('Acl' => array('type' => 'requester', 'enabled' => false));
+
+/**
  * Validation rules
  *
  * @var array
@@ -93,5 +101,31 @@ class User extends AppModel {
 			'finderQuery' => '',
 		)
 	);
+
+	public function parentNode() {
+		if (!$this->id && empty($this->data)) {
+			return null;
+		}
+		if (isset($this->data['User']['role_id'])) {
+			$roleId = $this->data['User']['role_id'];
+		} else {
+			$roleId = $this->field('role_id');
+		}
+		if (!$roleId) {
+			return null;
+		}
+		return array('Role' => array('id' => $roleId));
+	}
+
+	public function bindNode($user) {
+		return array('model' => 'Role', 'foreign_key' => $user['User']['role_id']);
+	}
+
+	public function beforeSave($options = array()) {
+		$this->data['User']['password'] = AuthComponent::password(
+			$this->data['User']['password']
+		);
+		return true;
+	}
 
 }

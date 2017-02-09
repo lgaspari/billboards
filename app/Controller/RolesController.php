@@ -9,13 +9,6 @@ App::uses('AppController', 'Controller');
 class RolesController extends AppController {
 
 /**
- * Components
- *
- * @var array
- */
-	public $components = array('Paginator');
-
-/**
  * index method
  *
  * @return void

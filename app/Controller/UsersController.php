@@ -8,12 +8,95 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 
+	public function updatePermissions() {
+		$this->Acl->Aco->create(array('parent_id' => null, 'alias' => 'controllers'));
+		$this->Acl->Aco->save();
+
+	    $role = $this->User->Role;
+
+	    $role->id = 1;
+	    $this->Acl->allow($role, 'controllers');
+
+	    $role->id = 2;
+	    $this->Acl->deny($role, 'controllers');
+	    $this->Acl->allow($role, 'controllers/Screens/index');
+	    $this->Acl->allow($role, 'controllers/Screens/add');
+	    $this->Acl->allow($role, 'controllers/Screens/edit');
+	    $this->Acl->allow($role, 'controllers/Screens/view');
+	    $this->Acl->allow($role, 'controllers/Contents/index');
+	    $this->Acl->allow($role, 'controllers/Contents/add');
+	    $this->Acl->allow($role, 'controllers/Contents/edit');
+	    $this->Acl->allow($role, 'controllers/Contents/view');
+	    $this->Acl->allow($role, 'controllers/ContentTypes/index');
+	    $this->Acl->allow($role, 'controllers/ContentTypes/add');
+	    $this->Acl->allow($role, 'controllers/ContentTypes/edit');
+	    $this->Acl->allow($role, 'controllers/ContentTypes/view');
+	    $this->Acl->allow($role, 'controllers/Users/index');
+	    $this->Acl->allow($role, 'controllers/Users/add');
+	    $this->Acl->allow($role, 'controllers/Users/edit');
+	    $this->Acl->allow($role, 'controllers/Users/view');
+
+	    $role->id = 3;
+	    $this->Acl->deny($role, 'controllers');
+	    $this->Acl->allow($role, 'controllers/Screens/index');
+	    $this->Acl->allow($role, 'controllers/Screens/add');
+	    $this->Acl->allow($role, 'controllers/Screens/edit');
+	    $this->Acl->allow($role, 'controllers/Screens/view');
+	    $this->Acl->allow($role, 'controllers/Contents/index');
+	    $this->Acl->allow($role, 'controllers/Contents/view');
+	    $this->Acl->allow($role, 'controllers/ContentTypes/index');
+	    $this->Acl->allow($role, 'controllers/ContentTypes/view');
+	    $this->Acl->allow($role, 'controllers/Users/index');
+	    $this->Acl->allow($role, 'controllers/Users/view');
+
+	    $role->id = 4;
+	    $this->Acl->deny($role, 'controllers');
+	    $this->Acl->allow($role, 'controllers/Screens/index');
+	    $this->Acl->allow($role, 'controllers/Screens/view');
+	    $this->Acl->allow($role, 'controllers/Contents/index');
+	    $this->Acl->allow($role, 'controllers/Contents/view');
+	    $this->Acl->allow($role, 'controllers/ContentTypes/index');
+	    $this->Acl->allow($role, 'controllers/ContentTypes/view');
+	    $this->Acl->allow($role, 'controllers/Users/index');
+	    $this->Acl->allow($role, 'controllers/Users/view');
+
+	    // allow basic users to log out
+	    $this->Acl->allow($role, 'controllers/Users/logout');
+
+	    // we add an exit to avoid an ugly "missing views" error message
+	    echo "all done";
+	    exit;
+	}
+
 /**
- * Components
+ * login method
  *
- * @var array
+ * @return void
  */
-	public $components = array('Paginator');
+	public function login() {
+
+		if ($this->request->is('post')) {
+			if ($this->Auth->login()) {
+				return $this->redirect($this->Auth->redirect());
+			}
+			$this->Flash->error(__('Your username or password was incorrect.'));
+		}
+		else {
+			// Si el usuario está logeado
+			if ( $this->Auth->User('user') ) {
+				return $this->redirect($this->Auth->redirect()); // Redirecciono al lugar por default
+			}
+		}
+	}
+
+/**
+ * logout method
+ *
+ * @return void
+ */
+	public function logout() {
+		$this->redirect($this->Auth->logout());
+	}
 
 /**
  * index method

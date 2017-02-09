@@ -8,6 +8,13 @@ App::uses('AppModel', 'Model');
 class Role extends AppModel {
 
 /**
+ * ActAs rules
+ *
+ * @var array
+ */
+	public $actsAs = array('Acl' => array('type' => 'requester'));
+
+/**
  * Validation rules
  *
  * @var array
@@ -47,5 +54,9 @@ class Role extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+
+    public function parentNode() {
+        return null;
+    }
 
 }

@@ -9,13 +9,6 @@ App::uses('AppController', 'Controller');
 class ContentsController extends AppController {
 
 /**
- * Components
- *
- * @var array
- */
-	public $components = array('Paginator');
-
-/**
  * index method
  *
  * @return void
